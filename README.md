@@ -127,8 +127,8 @@ The roles are in [roles](/ansible/roles/) subdirectory.
 git clone https://github.com/spytliak/Genesis-terraform-ansible-app.git
 ```
 *2. Go to the project folder `/terraform/project_GENESIS/` [project_GENESIS](/terraform/project_GENESIS/);*  
-*fill in all needed variables to [genesis.auto.tfvars](/terraform/project_GENESIS/genesis.auto.tfvars) for deploy;*  
-*check the backend and if use it, you should create backet for that:*  
+    *fill in all needed variables to [genesis.auto.tfvars](/terraform/project_GENESIS/genesis.auto.tfvars) for deploy;*  
+    *check the backend and if use it, you should create backet for that:*  
 
 *3. Deploy the infrastructure. For all deploy by terraform, please set variable "**ansible** = true":*
 ```
