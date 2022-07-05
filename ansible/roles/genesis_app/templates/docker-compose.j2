@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  flask-api:
+    image: {{ app.image| d('spytliak/genesis-flask-rest-api:v1') }}
+    container_name: genesis-flask-rest-api
+    restart: always
+    volumes:
+      - flaskapi:/app
+    ports:
+      - "5000:5000"
+    env_file: .env
+    environment:
+      FLASK_DEBUG: ${FLASK_DEBUG}
+      FLASK_ENVIRONMENT: ${FLASK_ENVIRONMENT}
+      FLASK_APP: ${FLASK_APP}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOSTNAME: ${DB_HOSTNAME}
+      DB_NAME: ${DB_NAME}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "0.0.0.0:5000"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+    networks:
+      - genesis
+
+networks:
+  genesis:
+    name: api
+
+volumes:
+  flaskapi:

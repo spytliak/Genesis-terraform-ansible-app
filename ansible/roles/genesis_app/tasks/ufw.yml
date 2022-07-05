@@ -1,0 +1,8 @@
+---
+- name: stop and disable ufw
+  systemd:
+    name: ufw
+    state: "{{ ufw.service.state| d('stopped') }}"
+    enabled: "{{ ufw.service.enabled| d('no') }}"
+  tags: 
+    - ufw

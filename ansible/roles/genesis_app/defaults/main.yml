@@ -1,0 +1,33 @@
+---
+docker:
+  gpg_key: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
+  keyring: "/usr/share/keyrings/docker-archive-keyring.gpg"
+  source_file: "/etc/apt/sources.list.d/docker.list"
+  apt_list:
+    - ca-certificates
+    - curl
+    - gnupg
+    - lsb-release
+    - mysql-client
+    - git
+  packages:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+
+docker_compose:
+  url: "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64"
+  bin: "/usr/local/bin/docker-compose"
+
+ufw:
+  service:
+    state: "stopped"
+    enabled: "no"
+
+system_user: "{{ ansible_user }}"
+project_dir: /home/{{ system_user }}/project-genesis
+
+app:
+  image: "spytliak/genesis-flask-rest-api:v1"
+  dirs:
+    - api

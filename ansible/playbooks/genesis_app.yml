@@ -1,0 +1,6 @@
+---
+- hosts: app
+  gather_facts: true
+  become: true
+  roles:
+    - { role: genesis_app, when: ansible_os_family == 'Debian' }

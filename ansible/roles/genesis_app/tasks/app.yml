@@ -1,0 +1,45 @@
+---
+- name: create docker-compose folders for app
+  file:
+    path: "{{ project_dir }}/{{ item }}"
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    recurse: yes
+    mode: 0755
+  with_items: "{{ app.dirs }}"
+  tags:
+    - dirs
+
+- name: copy docker-compose project (api)
+  template:
+    src: docker-compose.j2
+    dest: "{{ project_dir }}/docker-compose.yml"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0644
+  tags:
+    - compose
+
+- name: copy .env file
+  copy:
+    src: .env
+    dest: "{{ project_dir }}"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0644
+
+- name: run docker-compose
+#  docker_compose: # The error was: ModuleNotFoundError: No module named 'docker'
+#    project_name: app
+#    project_src: "{{ project_dir }}"
+#    files: docker-compose.yml
+  shell: /usr/local/bin/docker-compose -f docker-compose.yml up -d
+  args:
+    chdir: "{{ project_dir }}"
+  tags:
+    - run_compose
+
+- name: pausing 10 seconds for giving time to start-up all containers
+  pause:
+    seconds: 10

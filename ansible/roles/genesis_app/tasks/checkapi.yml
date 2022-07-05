@@ -1,0 +1,27 @@
+---
+- name: health check http - 5000 (IP) 
+  uri:
+    url: "http://{{ hostvars[inventory_hostname]['inventory_hostname'] }}:5000"
+    status_code: 200
+    return_content: no
+    timeout: 4
+  register: project
+  until: project.status == 200
+
+- name: health check api - ALB (dns_name) 
+  uri:
+    url: "http://{{ alb_dns_name }}/api/health-check/ok"
+    status_code: 200
+    return_content: no
+    timeout: 4
+  register: project
+  until: project.status == 200
+    
+- name: setup and available
+  debug:
+    msg: 
+      - "Setup has completed successfully"
+      - "The api is available on IP:port - {{ hostvars[inventory_hostname]['inventory_hostname'] }}:5000 or ALB dns_name - {{ alb_dns_name }}"
+  changed_when: project.status == 200
+  tags:
+    - result

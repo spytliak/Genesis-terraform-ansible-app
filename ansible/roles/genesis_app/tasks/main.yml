@@ -1,0 +1,20 @@
+---
+- name: Disable ufw Ubuntu
+  include_tasks: ufw.yml
+  tags: 
+    - ufw
+
+- name: Install Docker
+  include_tasks: install_docker.yml
+  tags: 
+    - docker
+
+- name: Configure APP
+  include_tasks: app.yml
+  tags: 
+    - app
+
+- name: Check api
+  include_tasks: checkapi.yml
+  tags:
+    - check
