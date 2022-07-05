@@ -28,7 +28,7 @@ The project is in [project_GENESIS](/terraform/project_GENESIS/)
 * [genesis.auto.tfvars](/terraform/project_GENESIS/genesis.auto.tfvars)             - the overridden project variables  
 * [alb.tf](/terraform/project_GENESIS/alb.tf)                                       - deploy ALB
 * [ansible.tf](/terraform/project_GENESIS/ansible.tf)                               - create hosts, env, alb vars for ansible, and provisioner ansible in terraform (variable **ansible** = false is by default)
-* [backend.tf](/terraform/project_GENESIS/templates/backend.tf)                     - the backend file (s3)
+* [backend.tf](/terraform/project_GENESIS/backend.tf)                               - the backend file (s3)
 * [data.tf](/terraform/project_GENESIS/data.tf)                                     - all data of project
 * [ec2.tf](/terraform/project_GENESIS/ec2.tf)                                       - deploy EC2 instance
 * [outputs.tf](/terraform/project_GENESIS/outputs.tf)                               - all outputs (ami, ec2, rds, alb)
@@ -85,9 +85,9 @@ The roles are in [roles](/ansible/roles/) subdirectory.
 * [main.yml](/ansible/roles/genesis_app/tasks/main.yml)                           - the main playbook with include all tasks  
 * [docker-compose.j2](/ansible/roles/genesis_app/templates/docker-compose.j2)     - the template for docker-compose.yml  
 * [main.yml](/ansible//roles/genesis_app/defaults/main.yml)                       - the variables for role
-* [all.yaml](/ansible/inventory/group_vars/all/all.yml)                           - the group variables.  
-* [alb.yaml.example](/ansible/inventory/group_vars/all/alb.yml.example)           - the variable with ALB dns name.  
-* [host.ini.example](/ansible/inventory/host.ini.example)                         - the hosts file example.
+* [all.yaml](/ansible/inventory/group_vars/all/all.yaml)                           - the group variables.  
+* [alb.yaml.example](/ansible/inventory/group_vars/all/alb.yaml.example)           - the variable with ALB dns name.  
+* [host.ini.example](/ansible/inventory/hosts.ini.example)                         - the hosts file example.
 * [files](/ansible/roles/genesis_app/files/.env.example)                          - the env file example.
 
 #### Directory tree - Ansible
@@ -96,7 +96,7 @@ The roles are in [roles](/ansible/roles/) subdirectory.
 |   ├── group_vars
 |   |   └── all
 |   |        ├── all.yaml
-|   |        └── alb.yaml
+|   |        └── alb.yaml.example
 |   └── hosts.ini.example
 |
 ├── playbooks
@@ -134,7 +134,7 @@ terraform init
 terraform validate
 terraform apply
 ```
-*4. If don't all deplo, go to ansible directory and install APP by Ansible:*
+*4. If don't need to deploy all, will go to ansible directory and install APP by Ansible:*
 ```
 ansible-playbook -i inventory/hosts.ini playbooks/genesis_app.yml
 ```
