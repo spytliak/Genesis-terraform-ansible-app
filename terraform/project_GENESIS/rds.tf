@@ -1,5 +1,5 @@
 #-----------------------------------------------------------------------
-# Random password for rds
+# Random password for RDS
 #-----------------------------------------------------------------------
 resource "random_password" "password_rds" {
   count            = var.rds["create_pass"] ? 1 : 0
@@ -57,8 +57,6 @@ resource "aws_db_instance" "rds" {
   ]
 
   db_subnet_group_name = aws_db_subnet_group.rds_subnet_group.id
-
-  #parameter_group_name   = "default.mysql5.7"
 
   tags = merge(
     var.common_tags,

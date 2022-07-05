@@ -37,10 +37,15 @@ resource "aws_instance" "app" {
 
 /*
 resource "aws_ebs_volume" "app_volume" {
-     availability_zone = data.aws_availability_zones.available.names[1]
+     availability_zone = data.aws_availability_zones.available.names[count.index]
      size              = 10
      type = "gp3"
-     tags = merge(var.common_tags, { Name = "app_volume-Genesis" })
+     tags = merge(
+      var.common_tags,
+      { 
+        Name = "app_volume-${var.project}"
+      }
+    )
 }
 
 resource "aws_volume_attachment" "app_volume" {
