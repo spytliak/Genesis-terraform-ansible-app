@@ -6,7 +6,7 @@ The repo is for creating and configuring an infrastructure in the AWS cloud for 
 Terraform creates: vpc, ec2 instance, RDS, ALB. Also, generate ssh_key, hosts and env files for Ansible.  
 Ansible configures instance, copy files and run docker-compose.  
 
-### Architecture AWS
+#### Architecture AWS
 ![architecture](images/genesis_aws.png)  
 
 #### Requirements
