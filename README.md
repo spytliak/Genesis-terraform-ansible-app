@@ -6,6 +6,9 @@ The repo is for creating and configuring an infrastructure in the AWS cloud for 
 Terraform creates: vpc, ec2 instance, RDS, ALB. Also, generate ssh_key, hosts and env files for Ansible.  
 Ansible configures instance, copy files and run docker-compose.  
 
+### Architecture AWS
+![architecture](images/genesis_aws.png)  
+
 #### Requirements
 There are packages below that should be installed on the (local) host where you'll be running deploy:
  * python >= 3.7
@@ -72,23 +75,23 @@ The project is in [project_GENESIS](/terraform/project_GENESIS/)
 
 ### Ansible
 The ansible playbooks for deploy the RESTful API application (run Docker Compose project in AWS instance).  
-The Linux user that can be used by Ansible to access the host.  
+The Linux user that can be used by Ansible to access the host is vars *ssh_user_name*, for Ubuntu default is **ubuntu** (in AWS, GCP, Openstack).
 
 The playbooks are in [playbooks](/ansible/playbooks/) subdirectory.  
 The roles are in [roles](/ansible/roles/) subdirectory.  
 
-* [genesis_app.yml](/ansible/playbooks/genesis_app.yml)                           - the playbook for deploing APP
-* [app.yml](/ansible/roles/genesis_app/tasks/app.yml)                             - deploy RESTful API application: copy files and run docker-compose  
-* [checkapi.yml](/ansible/roles/genesis_app/tasks/checkapi.yml)                   - health check
-* [install_docker.yml](/ansible/roles/genesis_app/tasks/install_docker.yml)       - install docker and docker-compose in Ubuntu
-* [ufw.yml](/ansible/roles/genesis_app/tasks/ufw.yml)                             - disable ufw in ubuntu  
-* [main.yml](/ansible/roles/genesis_app/tasks/main.yml)                           - the main playbook with include all tasks  
-* [docker-compose.j2](/ansible/roles/genesis_app/templates/docker-compose.j2)     - the template for docker-compose.yml  
-* [main.yml](/ansible//roles/genesis_app/defaults/main.yml)                       - the variables for role
+* [genesis_app.yml](/ansible/playbooks/genesis_app.yml)                            - the playbook for deploing APP
+* [app.yml](/ansible/roles/genesis_app/tasks/app.yml)                              - deploy RESTful API application: copy files and run docker-compose  
+* [checkapi.yml](/ansible/roles/genesis_app/tasks/checkapi.yml)                    - health check
+* [install_docker.yml](/ansible/roles/genesis_app/tasks/install_docker.yml)        - install docker and docker-compose in Ubuntu
+* [ufw.yml](/ansible/roles/genesis_app/tasks/ufw.yml)                              - disable ufw in ubuntu  
+* [main.yml](/ansible/roles/genesis_app/tasks/main.yml)                            - the main playbook with include all tasks  
+* [docker-compose.j2](/ansible/roles/genesis_app/templates/docker-compose.j2)      - the template for docker-compose.yml  
+* [main.yml](/ansible//roles/genesis_app/defaults/main.yml)                        - the variables for role
 * [all.yaml](/ansible/inventory/group_vars/all/all.yaml)                           - the group variables.  
 * [alb.yaml.example](/ansible/inventory/group_vars/all/alb.yaml.example)           - the variable with ALB dns name.  
-* [host.ini.example](/ansible/inventory/hosts.ini.example)                         - the hosts file example.
-* [files](/ansible/roles/genesis_app/files/.env.example)                          - the env file example.
+* [hosts.ini.example](/ansible/inventory/hosts.ini.example)                        - the hosts file example.
+* [files](/ansible/roles/genesis_app/files/.env.example)                           - the env file example.
 
 #### Directory tree - Ansible
 ```bash
